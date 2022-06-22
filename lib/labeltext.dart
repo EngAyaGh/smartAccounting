@@ -47,6 +47,7 @@ const String label_empty='Value is Empty';
 /////////////////////////////////////////
 
 const String label_amount_paid='المبلغ المدفوع';
+const String label_priceprod=' سعر المادة';
 const String label_renew='التجديد السنوي';
 
 const String label_typepay='طريقة الدفع';
