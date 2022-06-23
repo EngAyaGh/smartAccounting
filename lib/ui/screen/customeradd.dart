@@ -1,7 +1,9 @@
+
 import 'package:accountingsmart/ui/widget/container_boxShadows.dart';
 import 'package:accountingsmart/ui/widget/custom_widget/custombutton.dart';
 import 'package:accountingsmart/ui/widget/custom_widget/row_edit.dart';
 import 'package:accountingsmart/ui/widget/custom_widget/text_form.dart';
+import 'package:accountingsmart/view_model/custom_vm.dart';
 import 'package:accountingsmart/view_model/productvm.dart';
 import 'package:accountingsmart/view_model/user_vm_provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,28 +16,28 @@ import '../../constants.dart';
 import '../../labeltext.dart';
 import '../utils.dart';
 
-class addProduct extends StatefulWidget {
-  addProduct({
+class addCustom extends StatefulWidget {
+  addCustom({
     this.fkmain,
     required this.nameregoin,
     required this.idregoin, Key? key}) : super(key: key);
   String? idregoin,nameregoin,fkmain;
 
   @override
-  _addProductState createState() => _addProductState();
+  _addCustomState createState() => _addCustomState();
 }
-class _addProductState extends State<addProduct> {
+class _addCustomState extends State<addCustom> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  final TextEditingController nameproduct = TextEditingController();
-  final TextEditingController priceController = TextEditingController();
-  final TextEditingController typeproductController = TextEditingController();
+  final TextEditingController namecustom = TextEditingController();
+  final TextEditingController addresscustom = TextEditingController();
+  final TextEditingController mobile = TextEditingController();
 
   final _globalKey = GlobalKey<FormState>();
 
   @override void initState() {
 
-    nameproduct.text=widget.idregoin==null?''
+    namecustom.text=widget.idregoin==null?''
         :widget.nameregoin.toString();
 
     super.initState();
@@ -47,7 +49,7 @@ class _addProductState extends State<addProduct> {
         body:Directionality(
           textDirection: myui.TextDirection.rtl,
           child: ModalProgressHUD(
-            inAsyncCall: Provider.of<product_vm>(context)
+            inAsyncCall: Provider.of<customer_vm>(context,listen: true)
                 .isloading,
             child : Form(
               key: _globalKey,
@@ -55,7 +57,7 @@ class _addProductState extends State<addProduct> {
                 padding: EdgeInsets.only(
                     top: 100,
                     right: 20,
-                    left: 20,bottom: 20),
+                    left: 20,bottom: 50),
                 child: ContainerShadows(
                   width: double.infinity,
                   margin: EdgeInsets.only(),
@@ -63,76 +65,48 @@ class _addProductState extends State<addProduct> {
                   child: Column(
                     children: [
                       SizedBox(height: 15,),
-
-                      RowEdit(name: 'اسم المادة', des: 'REQUIRED'),
-                      SizedBox(height: 15,),
+//mobile
+                      RowEdit(name: 'اسم الزبون', des: 'REQUIRED'),
+                     // SizedBox(height: 15,),
                       EditTextFormField(
                         vaild: (value) {
                           if (value!.toString().trim().isEmpty) {
                             return 'الحقل فارغ';
                           }
                         },
-                        hintText: '',
-                        controller: nameproduct,
+                        hintText: 'الزبون',
+                        controller: namecustom,
                       ),
-                      RowEdit(name: ' سعر المادة', des: 'REQUIRED'),
+                      RowEdit(name: 'رقم الموبايل ', des: 'REQUIRED'),
+                     // SizedBox(height: 15,),
                       EditTextFormField(
+                        vaild: (value) {
+                          if (value!.toString().trim().isEmpty) {
+                            return 'الحقل فارغ';
+                          }
+                        },
+                        hintText: 'الموبايل',
+                        controller: mobile,
+                      ),
+                      RowEdit(name: ' العنوان ', des: 'REQUIRED'),
+                      EditTextFormField(
+                        maxline: 4,
                         obscureText: false,
-                        hintText: label_priceprod,
+                        hintText: '',
                         vaild: (value) {
                           if (value.toString().trim().isEmpty) {
                             return label_empty;
                           }
-                          if(double.tryParse(value.toString()) == null)
-                            return 'من فضلك ادخل عدد';
+
                         },
-                        controller: priceController,
+                        controller: addresscustom,
                         onChanged: (val) {
                           // nameprod = val;
                         },
-                        inputType: TextInputType.number,
+
                       ),
-                      SizedBox(height: 15,),
-                      RowEdit(name: 'الوحدة ', des: 'REQUIRED'),
                       SizedBox(height: 15,),
 
-                      EditTextFormField(
-                        vaild: (value) {
-                          if (value!.toString().trim().isEmpty) {
-                            return 'الحقل فارغ';
-                          }
-                        },
-                        hintText: '',
-                        controller: typeproductController,
-                      ),
-                      RowEdit(name: 'الصلاحية ', des: 'REQUIRED'),
-                      TextFormField(
-                        validator:  (value) {
-                          if (_currentDate == DateTime(1, 1, 1)) {
-                            return 'يرجى تعيين التاريخ ';
-                          }},
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(
-                            Icons.date_range,
-                            color: kMainColor,
-                          ),
-                          hintStyle: const TextStyle(
-                              color: Colors.black45,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500),
-                              hintText:
-                              _currentDate == DateTime(1, 1, 1)
-                              ? 'التاريخ' //_currentDate.toString()
-                              :DateFormat('yyyy-MM-dd').format(_currentDate),
-                          //_invoice!.dateinstall_task.toString(),
-                          filled: true,
-                          fillColor: Colors.grey.shade200,
-                        ),
-                        readOnly: true,
-                        onTap: () {
-                          _selectDate(context, DateTime.now());
-                        },
-                      ),
                       SizedBox(height: 15,),
                       CustomButton(
                         width:double.infinity,
@@ -142,18 +116,18 @@ class _addProductState extends State<addProduct> {
                           if (_globalKey.currentState!.validate()) {
                             _globalKey.currentState!.save();
                             // addproduct_vm
-                           await Provider.of<product_vm>(context,listen: false)
-                            .addproduct_vm({
-                              'nameProduct':nameproduct.text.toString(),
-                              'priceProduct':priceController.text.toString(),
-                              'typeproduct':typeproductController.text.toString(),
-                              'expire':Utils.toDate22(_currentDate),//DateTime.now().toString(),
+                          await  Provider.of<customer_vm>(context,listen: false)
+                                .addcustom_vm({
+                              'namecustom':namecustom.text.toString(),
+                              'addresscustom':addresscustom.text.toString(),
+                              'mobile':mobile.text.toString(),
+                              'typecustom':'cust',
                               'fkuser':Provider.of<user_vm_provider>(context,listen: false).currentUser.idUser.toString(),
                             });
-                            nameproduct.text='';
-                            priceController.text='';
-                            typeproductController.text='';
-                            _currentDate=DateTime(1,1,1);
+                           namecustom.text='';
+                            addresscustom.text='';
+                            mobile.text='';
+
                             _scaffoldKey.currentState!.showSnackBar(
                                 SnackBar(content: Text(' تم الحفظ بنجاح  '))
                             );
@@ -195,7 +169,7 @@ class _addProductState extends State<addProduct> {
         ));
   }
   clear(BuildContext context) {
-    nameproduct.text="";
+    namecustom.text="";
     _scaffoldKey.currentState!.showSnackBar(
         SnackBar(content: Text('تمت الإضافة بنجاح'))
     );
@@ -210,36 +184,6 @@ class _addProductState extends State<addProduct> {
     );
     print("error");
   }
-  DateTime _currentDate = DateTime(1, 1, 1);
-  Future<void> _selectDate(BuildContext context, DateTime currentDate) async {
-    //String output = formatter.format(currentDate);
-    // DateFormat('yyyy-MM-dd – kk:mm').format(now);
-    DateTime? pickedDate = await showDatePicker(
-        context: context,
-        currentDate: currentDate,
-        initialDate: currentDate,
-        firstDate: DateTime(2015),
-        lastDate: DateTime(3010));
-    if (pickedDate != null) //&& pickedDate != currentDate)
-      setState(() {
-        // _invoice.dateinstall_task=pickedDate.toString() ;
-        _currentDate = pickedDate;
-        print(_currentDate.toString());
-        //
-        // final time = Duration(hours: DateTime.now().hour,
-        //     minutes: DateTime.now().minute,seconds: DateTime.now().second);
-        // print('timme');
-        // print(DateFormat.Hms().format(_currentDate));
-        // _currentDate.add(Duration(hours: DateTime.now().hour));
-        // print(time.toString());
-        // print(_currentDate.toString());
-        // _currentDate.add(Duration(hours: selectedTime.hour));
 
-        // _invoice!.dateinstall_task = _currentDate.toString();
-        //_invoice!.daterepaly = _currentDate.toString();
-        //_currentDate.hour=DateTime.now().hour;
-      });
-
-  }
 
 }

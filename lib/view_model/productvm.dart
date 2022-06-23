@@ -9,7 +9,32 @@ import 'package:provider/provider.dart';
 
 
 class product_vm extends ChangeNotifier {
-  List<ProductModel> listProduct = [];
+  List<ProductModel> listProduct = [
+  // ProductModel(
+  // nameProduct: 'منتج1',
+  // priceProduct: '2000',
+  // type: 'type',
+  // expire: '2025/5/2',
+  // fkuser: '1'),
+  // ProductModel(
+  // nameProduct: 'منتج3',
+  // priceProduct: '1000',
+  // type: 'type',
+  // expire: '2024/1/2',
+  // fkuser: '1'),
+  // ProductModel(
+  // nameProduct: 'منتج2',
+  // priceProduct: '1200',
+  // type: 'type',
+  // expire: '2023/8/2',
+  // fkuser: '1')
+  ];
+  late String? selectedValue=null;
+
+  void changeVal(String?  val){
+    selectedValue=val;
+    notifyListeners();
+  }
   bool isloading=false;
   UserModel? usercurrent;
 
@@ -31,12 +56,16 @@ class product_vm extends ChangeNotifier {
   }
 
   Future<String> addproduct_vm(Map<String, dynamic?> body) async {
-    ProductModel res = await ProductService().addProduct(body);
+    isloading=true;
+    notifyListeners();
+    //ProductModel res = await ProductService().addProduct(body);
     // if (res!="false") {
     //   body.addAll({'id_product':res});
-    listProduct.insert(0,res);
+    //listProduct.insert(0,res);
+    listProduct.insert(0, ProductModel.fromJson(body));
     //notifyListeners();
     // }
+    isloading=false;
     notifyListeners();
     return "done";
   }

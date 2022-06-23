@@ -1,9 +1,13 @@
 import 'package:accountingsmart/ui/login.dart';
 import 'package:accountingsmart/ui/screen/home.dart';
 import 'package:accountingsmart/view_model/authprovider.dart';
+import 'package:accountingsmart/view_model/custom_vm.dart';
+import 'package:accountingsmart/view_model/invoice_vm.dart';
 import 'package:accountingsmart/view_model/level_vm.dart';
 import 'package:accountingsmart/view_model/privilge_vm.dart';
+import 'package:accountingsmart/view_model/productvm.dart';
 import 'package:accountingsmart/view_model/regoin_vm.dart';
+import 'package:accountingsmart/view_model/switch_provider.dart';
 import 'package:accountingsmart/view_model/user_vm_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,9 +28,28 @@ void main() {
           update: (ctx,value,prev)=>prev!..setvalue(value.currentUser),
           //  client_vm(value.currentUser)
         ),
+        ChangeNotifierProxyProvider<user_vm_provider,product_vm>(
+          create: (_)=> product_vm(),
+          //   Provider.of<user_vm_provider>(_, listen: false).currentUser),
+          update: (ctx,value,prev)=>prev!..setvalue(value.currentUser),
+          //  client_vm(value.currentUser)
+        ),
         ChangeNotifierProvider<AuthProvider>(create: (_) => AuthProvider()),
+        ChangeNotifierProvider<switch_provider>(create: (_) => switch_provider()),
         ChangeNotifierProxyProvider<user_vm_provider,regoin_vm>(
           create: (_)=> regoin_vm(),
+          //   Provider.of<user_vm_provider>(_, listen: false).currentUser),
+          update: (ctx,value,prev)=>prev!..setvalue(value.currentUser),
+          //  client_vm(value.currentUser)
+        ),
+        ChangeNotifierProxyProvider<user_vm_provider,customer_vm>(
+          create: (_)=> customer_vm(),
+          //   Provider.of<user_vm_provider>(_, listen: false).currentUser),
+          update: (ctx,value,prev)=>prev!..setvalue(value.currentUser),
+          //  client_vm(value.currentUser)
+        ),
+        ChangeNotifierProxyProvider<user_vm_provider,invoice_vm>(
+          create: (_)=> invoice_vm(),
           //   Provider.of<user_vm_provider>(_, listen: false).currentUser),
           update: (ctx,value,prev)=>prev!..setvalue(value.currentUser),
           //  client_vm(value.currentUser)

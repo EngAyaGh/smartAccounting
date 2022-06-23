@@ -6,7 +6,13 @@ class InvoiceModel {
     required this.typePay,
     required this.nameproduct,
     required this.total,
+    required this.amount_paid,
     required this.typeinvoice,
+    required this.name_customer,
+    this.fkcus,
+    this.fkuser,
+    this.nameUser,
+    this.nameregoin,
     required this.products,
 
   });
@@ -15,7 +21,13 @@ class InvoiceModel {
   String? typePay;
   String? nameproduct;
   String? total;
+  String? amount_paid;
   String? typeinvoice;//مرتجع/كامل
+  String? name_customer;
+  String? fkuser;
+  String? fkcus;
+  String? nameUser;
+  String? nameregoin;
   List<ProductsInvoice>? products;
 
   InvoiceModel.fromJson(Map<String, dynamic> json){
@@ -24,7 +36,13 @@ class InvoiceModel {
     typePay = json['typePay'];
     nameproduct = json['nameproduct'];
     total = json['total'];
+    amount_paid = json['amount_paid'];
     typeinvoice = json['typeinvoice'];
+    name_customer = json['name_customer'];
+    fkuser = json['fkuser'];
+    fkcus = json['fkcus'];
+    nameUser = json['nameUser'];
+    nameregoin = json['nameregoin'];
     products=getproud(json['products']);
 
   }
@@ -36,19 +54,25 @@ class InvoiceModel {
     _data['typePay'] = typePay;
     _data['nameproduct'] = nameproduct;
     _data['total'] = total;
+    _data['amount_paid'] = amount_paid;
     _data['typeinvoice'] = typeinvoice;
+    _data['name_customer'] = name_customer;
+    _data['fkuser'] = fkuser;
+    _data['fkcus'] = fkcus;
+    _data['nameUser'] = nameUser;
+    _data['nameregoin'] = nameregoin;
     _data['products'] =
         products!.map((e)=>e.toJson()).toList();
     return _data;
   }
-  List<ProductsInvoice> getproud(data){
+    List<ProductsInvoice> getproud(data) {
     List<ProductsInvoice> prodlist = [];
     if(data!=null){
       for (int i = 0; i < data.length; i++) {
         print(i);
-
-        //print("data "+ "[" + data[i] + "]");
-        prodlist.add(ProductsInvoice.fromJson(data[i]));
+        prodlist.add(
+            ProductsInvoice.fromJson(data[i])
+        );
       }
     }
     return prodlist;

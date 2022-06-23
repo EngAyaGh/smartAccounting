@@ -6,7 +6,7 @@ class CustomerModel {
     required this.addresscustom,
     required this.mobile,
      required this.typecustom,
-    // required this.fkConfig,
+     required this.fkuser,
     // this.value_config
   });
   String? idcustomer;
@@ -14,7 +14,7 @@ class CustomerModel {
   late final String addresscustom;
   late final String mobile;
    late final String typecustom;
-  // late String? fkConfig;
+   late String? fkuser;
   // late final String? value_config;
 
   CustomerModel.fromJson(Map<String, dynamic> json){
@@ -23,7 +23,7 @@ class CustomerModel {
     addresscustom = json['addresscustom'];
     mobile = json['mobile'];
     typecustom = json['typecustom'];
-    // fkConfig = json['fk_config'];
+    fkuser = json['fkuser'];
     // value_config = json['value_config'];
   }
 
@@ -34,7 +34,7 @@ class CustomerModel {
     _data['addresscustom'] = addresscustom;
     _data['mobile'] = mobile;
     _data['typecustom'] = typecustom;
-    // _data['fk_config'] = fkConfig;
+     _data['fkuser'] = fkuser;
     // _data['value_config']=value_config;
     return _data;
   }
