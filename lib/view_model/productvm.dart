@@ -1,6 +1,7 @@
 
 import 'package:accountingsmart/model/productmodel.dart';
 import 'package:accountingsmart/model/usermodel.dart';
+import 'package:accountingsmart/services/ProductService.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
@@ -48,6 +49,7 @@ class product_vm extends ChangeNotifier {
 
     return true;
   }
+
   Future<String> deleteProduct(String? id_product) async {
     //listProduct=[];
     String res = await ProductService().deleteProductById(id_product!);

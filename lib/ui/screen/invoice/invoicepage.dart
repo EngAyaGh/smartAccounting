@@ -66,13 +66,6 @@ class _InvoicePageState extends State<InvoicePage> {
                   padding: const EdgeInsets.only(left: 8.0,right: 8.0,bottom: 5),
                   child: Column(
                     children: [
-                      // Row(
-                      //   children: [
-                      //     Text('الزبون : '+'احمد الجاسم'),
-                      //     Text('المنطقة : '+'بغداد '),
-                      //   ],
-                      // ),
-
                       RowEditTitle(name: 'اسم المادة', des: 'الكمية',des2: 'السعر',),
                       Divider(thickness: 1,color: Colors.grey,),
 

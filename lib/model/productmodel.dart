@@ -6,7 +6,7 @@ class ProductModel {
     required this.priceProduct,
     required this.type,
     required this.expire,
-    // required this.fkConfig,
+     required this.fkuser,
     // this.value_config
   });
   String? idProduct;
@@ -14,7 +14,7 @@ class ProductModel {
   late final String priceProduct;
   late final String type;
   late final String expire;
-  // late String? fkConfig;
+  late String? fkuser;
   // late final String? value_config;
 
   ProductModel.fromJson(Map<String, dynamic> json){
@@ -23,7 +23,7 @@ class ProductModel {
     priceProduct = json['priceProduct'];
     type = json['type'];
     expire = json['expire'];
-    // fkConfig = json['fk_config'];
+    fkuser = json['fkuser'];
     // value_config = json['value_config'];
   }
 
@@ -34,7 +34,7 @@ class ProductModel {
     _data['priceProduct'] = priceProduct;
     _data['type'] = type;
     _data['expire'] = expire;
-    // _data['fk_config'] = fkConfig;
+    _data['fkuser'] = fkuser;
     // _data['value_config']=value_config;
     return _data;
   }
